@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 350px;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .login-container h2 {
+            text-align: center;
+        }
+        input[type="text"],
+        input[type="password"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .mostrar-senha {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .mostrar-senha input {
+            margin-right: 8px;
+        }
+        button {
+            background-color: #ff9100;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #db6606;
+        }
+        .mensagem {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Nome de usuário">
+        <input type="password" id="password" placeholder="Senha">
+    
+        <div class="mostrar-senha">
+            <input type="checkbox" id="mostrarSenha">
+            <label for="mostrarSenha">Mostrar senha</label>
+        </div>
+
+        <button onclick="validarLogin()">Entrar</button>
+        <div class="mensagem" id="mensagem"></div>
+    </div>
+
+    <script>
+        let tentativas = 3;
+
+        document.getElementById('mostrarSenha').addEventListener('change', function () {
+            const senhaInput = document.getElementById('password');
+            senhaInput.type = this.checked ? 'text' : 'password';
+        });
+
+        function validarLogin() {
+            const nome = document.getElementById('username').value.trim();
+            const senha = document.getElementById('password').value;
+            const mensagem = document.getElementById('mensagem');
+
+            if (nome === "" || senha === "") {
+                mensagem.textContent = "Por favor, preencha todos os campos.";
+                mensagem.style.color = "red";
+                return;
+            }
+
+            if (tentativas <= 0) {
+                mensagem.textContent = "Usuário bloqueado. Tente novamente mais tarde.";
+                mensagem.style.color = "red";
+                return;
+            }
+
+            if (senha === "12345") {
+                mensagem.textContent = `Bem-vindo, ${nome}!`;
+                mensagem.style.color = "green";
+            } else {
+                tentativas--;
+
+            if (tentativas > 0) {
+                mensagem.textContent = `Senha incorreta. Tente novamente. Tentativas restantes: ${tentativas}`;
+            } else {
+                mensagem.textContent = "Usuário bloqueado. Tente novamente mais tarde.";
+            }
+                mensagem.style.color = "red";
+            }
+            }
+    </script>
+</body>
+</html>
