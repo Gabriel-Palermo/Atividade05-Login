@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador de Compras</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f4f4f4;
+        }
+
+        h2 {
+        text-align: center;
+        }
+
+        .container {
+        max-width: 400px;       /* Largura máxima do conteúdo */
+        width: 100%;
+        margin: 0 auto;         /* Centraliza horizontalmente */
+        }
+
+        .produto {
+        background: white;
+        padding: 6px 10px;
+        margin: 6px 0;
+        border-radius: 6px;
+        box-shadow: 0 0 4px rgba(0,0,0,0.1);
+        font-size: 14px;
+        }
+
+        .produto label {
+        display: flex;
+        justify-content: space-between;
+        }
+
+        button {
+        margin-top: 15px;
+        width: 100%;
+        padding: 8px;
+        background-color: #ff9100;
+        color: white;
+        border: none;
+        font-weight: bold;
+        font-size: 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        }
+
+        button:hover {
+        background-color: #db6606;
+        }
+
+        .resultado {
+        margin-top: 20px;
+        font-weight: bold;
+        text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Adquira seus produtos na Loja</h2>
+
+    <div class="container">
+        <div class="produto">
+        <label><input type="checkbox" value="59.90"> Camiseta Lisa - R$59,90</label>
+        </div>
+        <div class="produto">
+        <label><input type="checkbox" value="79.90"> Camiseta Estampada - R$79,90</label>
+        </div>
+        <div class="produto">
+        <label><input type="checkbox" value="159.90"> Camisa Social - R$159,90</label>
+        </div>
+        <div class="produto">
+        <label><input type="checkbox" value="119.90"> Calça Jeans - R$119,90</label>
+        </div>
+        <div class="produto">
+        <label><input type="checkbox" value="99.90"> Calça Moletom - R$99,90</label>
+        </div>
+        <div class="produto">
+        <label><input type="checkbox" value="34.90"> Boné New Era - R$34,90</label>
+        </div>
+        <div class="produto">
+        <label><input type="checkbox" value="259.90"> Tênis Básico - R$259,90</label>
+        </div>
+        <div class="produto">
+        <label><input type="checkbox" value="19.90"> 2 pares de Meias - R$19,90</label>
+        </div>
+        <div class="produto">
+        <label><input type="checkbox" value="199.90"> Jaqueta - R$199,90</label>
+        </div>
+
+        <button onclick="finalizarCompra()">Finalizar Compra</button>
+        <div class="resultado" id="resultado"></div>
+    </div>
+
+    <script>
+        const saldoInicial = 200.00;
+
+        function finalizarCompra() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        let carrinho = [];
+
+        checkboxes.forEach(item => {
+            carrinho.push(parseFloat(item.value));
+        });
+
+        let total = 0;
+        for (let i = 0; i < carrinho.length; i++) {
+            total += carrinho[i];
+        }
+
+        const resultado = document.getElementById('resultado');
+
+        const mensagem = total <= saldoInicial
+            ? `Compra realizada com sucesso! Total: R$${total.toFixed(2)} | Saldo restante: R$${(saldoInicial - total).toFixed(2)}`
+            : `Saldo insuficiente! Total da compra: R$${total.toFixed(2)} | Saldo disponível: R$${saldoInicial.toFixed(2)}`;
+
+        resultado.textContent = mensagem;
+        resultado.style.color = total <= saldoInicial ? "green" : "red";
+        }
+    </script>
+</body>
+</html>
